@@ -1,11 +1,16 @@
-#Práctica 1. Nombre en código Morse
+#Práctica 2. Rampas
 
-Morse Code Timing
-https://morsecode.world/international/timing.html
-    Dit: 1 unit
-    Dah: 3 units
-    Intra-character space (the gap between dits and dahs within a character): 1 unit
-    Inter-character space (the gap between the characters of a word): 3 units
-    Word space (the gap between two words): 7 units
 
+El programa realiza una rampa de intensidad en el led, de subida de 5 segundos 
+y de descenso de 2 segundos en el led de la siguiente manera:
+
+(V)          
+|            
+|             *
+|          *  |*
+|       *     | *
+|    *        |  *
+| *           |   *
+|__ __ __ __ __ __ __ __ __  
+0             5   7      (s)
 
