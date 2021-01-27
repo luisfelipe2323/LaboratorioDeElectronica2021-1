@@ -1,58 +1,37 @@
 
-int buttonPushCounter = 0;   
-int buttonState = 0;         
+int buttonState = 0;
 int lastButtonState = 0;
+// Usamos dos variables para guardar el valor de millis. Una al inicio, cuando "apretamos"
+// botón y otra al final cuando lo "soltamos".
+unsigned long inicio, fin;
 
 void setup() {
-pinMode(2,INPUT);
+  Serial.begin(9600);
+  pinMode(2, INPUT);
 }
 
 void loop() {
-  
+
+
   buttonState = digitalRead(2);
- 
+
   if (buttonState != lastButtonState) {
-    
-     if (buttonState == HIGH) {
-             buttonPushCounter++;
-       }
+    // Si estamos apretandolo guardamos el valor al inicio de millis.
+    if (buttonState == HIGH) {
+      inicio = millis();
+    }
+    else {
+      // Si estamos soltandolo tomamos el valor del final. El tiempo transcurrido entre el final
+      // y el inicio nos dará el tiempo que está el botón pulsado. Ese valor lo mostramos por el puerto serie.
+      fin = millis();
+      Serial.print(F("Has pulsado el boton durante "));
+      Serial.print(fin - inicio);
+      Serial.println(F(" milisegundos"));
+    }
   }
   
   lastButtonState = buttonState;
 
-   if (buttonPushCounter  == 1) {
-    digitalWrite(13, HIGH);
-    digitalWrite(11, LOW);
-    digitalWrite(10, LOW);
-
-
-  }
-  
-  if (buttonPushCounter  == 2) {
-    digitalWrite(13, LOW);
-    digitalWrite(11, HIGH);
-    digitalWrite(10, LOW);
-
-
-  } 
-  
-  if (buttonPushCounter  == 3) {
-    digitalWrite(13, LOW);
-    digitalWrite(11, LOW);
-    digitalWrite(10, HIGH);
-
-  }
-
-  if (buttonPushCounter  == 4) {
-    digitalWrite(13, HIGH);
-    digitalWrite(11, HIGH);
-    digitalWrite(10, HIGH);
-
-  }
-
-  if (buttonPushCounter  == 5) {
-    buttonPushCounter=1;
-
-  }
-
 }
+
+
