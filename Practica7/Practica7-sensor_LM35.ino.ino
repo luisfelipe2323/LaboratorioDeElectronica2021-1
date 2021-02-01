@@ -8,27 +8,26 @@ int   lectura;
 float temperatura;
 float vin;
 float vin_av = 0;
-float volInt = 4.74;
+float volInt = 4.72;
 int tempc, current_temp, last_temp;
 int min_temp, max_temp;
 float i, j;
 LiquidCrystal lcd(rs, rw, en, d4, d5, d6, d7);
 
-
 void setup() {
-  Serial.begin(9600);
+  //Serial.begin(9600);
   lcd.begin(16, 2);
   lcd.setCursor(0, 0);
   lcd.print("    **LM35**    ");
   lcd.setCursor(0, 1);
-  lcd.print(" **Practica 6** ");
+  lcd.print(" **Practica 7** ");
   delay(2000);
 }
 
 void loop()
 {
   temp_init();
-
+  
   for (j = 0; j < 90000; j++)
   {
     lcd.setCursor(0, 0);
@@ -94,11 +93,42 @@ void loop()
       lcd.print((char)223);
       lcd.print("C");
     }
-    
+
+    //Prende led azul
+    if (current_temp < 25)
+      temp_menorA25();
+    //Prende led verda        
+    if (current_temp >= 25 && current_temp <= 30)
+      temp_25a30();
+    //Prende led rojo
+    if (current_temp > 30)
+      temp_meyorA30();
+
     last_temp = current_temp;
     delay(1000);
   }
-  
+
+}
+
+//Rojo
+void temp_meyorA30() {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, LOW);
+    digitalWrite(7, LOW);
+}
+
+//Verde
+void temp_25a30() {
+    digitalWrite(2, LOW);
+    digitalWrite(3, HIGH);
+    digitalWrite(7, LOW);
+}
+
+//Azul
+void temp_menorA25() {
+    digitalWrite(2, LOW);
+    digitalWrite(3, LOW);
+    digitalWrite(7, HIGH);
 }
 
 //Se hace un muestreo de voltaje de LM35 de 4000
